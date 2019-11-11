@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit form</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
+</head>
+<body>
+	<div align="center">
+	<h1>Movielibrary</h1>
+	<p>Below you can edit the selected movie.</p>
+		
+	<form th:object="${elokuva}" th:action="@{/save}" action="#" method="post">
+<input type="hidden" th:field="*{id}" class="form-control"/>
+	<p>Title: <input type="text" th:field="${elokuva.title}" /></p>
+	<p>Director: <input type="text" th:field="${elokuva.director}" /></p>
+	<p>Writer: <input type="text" th:field="${elokuva.writer}" /></p>
+	<p>Year: <input type="text" th:field="${elokuva.year}" /></p>
+	<div style="clear: both; display: block; height: 5px;"></div>	
+	<label for="catlist">Category</label>
+	<select id="catlist" th:field="*{category}" class="form-control">
+    <option th:each="category: ${categories}" th:value="${category.categoryid}" th:text="${category.name}"></option>
+    </select>
+<input  type="submit" class="btn btn-success" value="Save"></input>
+</form>
+</div>
+</body>
+
+</html>

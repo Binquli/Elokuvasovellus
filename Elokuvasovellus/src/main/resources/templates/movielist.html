@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Book List</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+</head>
+<body>
+
+
+
+<div class="col-md-4">
+	</div>
+	<div class="col-md-4">
+		<h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h3>
+	</div>
+	<div class="col-md-4" style="padding:15px 0">
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" class="btn btn-success"/>
+		</form>
+	</div>
+	
+	<h1>Movies</h1>
+	<table class="table table-striped">
+		<tr>
+			<th>Title</th>
+			<th>Director</th>
+			<th>Writer</th>
+			<th>Year</th>
+			<th>Category</th>
+			<th sec:authorize="hasRole('ADMIN')"> </th>
+		</tr>
+
+		<tr th:each="elokuva : ${elokuvat}">
+		<td th:text="${elokuva.title}">Title</td>
+			<td th:text="${elokuva.director}">Director</td>
+			<td th:text="${elokuva.writer}">Writer</td>
+			<td th:text="${elokuva.year}">Year</td>
+			<td th:text="${elokuva.category.name}">Category</td>
+			
+			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/deletemovie/{id}(id=${elokuva.id})}" class="btn btn-danger">Delete</a></td>
+			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/editmovie/{id}(id=${elokuva.id})}">Edit</a></td>
+		</tr>
+	</table>	
+	<div align="center">
+	<a href="/addmovie">Add a new movie</a>
+	</div>
+
+</body>
+</html>
